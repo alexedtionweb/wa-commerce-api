@@ -25,3 +25,11 @@ services:
       - ./.data/postgresql:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "adm@waproject.com.br"
+      PGADMIN_DEFAULT_PASSWORD: "123mudar"
+    ports:
+      - "16543:80"

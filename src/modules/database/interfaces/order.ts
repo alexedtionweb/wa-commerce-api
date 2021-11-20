@@ -1,11 +1,11 @@
 export interface IOrder {
-  id: string;
+  id?: number;
   description: string;
   quantity: number;
   amount: number;
   currency: string;
-  productID: number;
-  customerID: number;
+  productID?: number;
+  customerID?: number;
   status?: string;
   unitPrice?: number;
   discount?: number;

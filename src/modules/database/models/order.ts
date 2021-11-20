@@ -3,8 +3,8 @@ import { IOrder } from './../interfaces/order';
 import { Model } from 'objection';
 
 export class Order extends Model implements IOrder {
-  @ApiProperty({ type: 'string' })
-  public id: string;
+  @ApiProperty({ type: 'number' })
+  public id?: number;
 
   @ApiProperty({ type: 'string' })
   public description: string;
@@ -19,10 +19,10 @@ export class Order extends Model implements IOrder {
   public currency: string;
 
   @ApiProperty({ type: 'number' })
-  public productID: number;
+  public productID?: number;
 
   @ApiProperty({ type: 'number' })
-  public customerID: number;
+  public customerID?: number;
 
   @ApiProperty({ type: 'string' })
   public status: string;
@@ -45,6 +45,9 @@ export class Order extends Model implements IOrder {
   @ApiProperty({ type: 'date-time' })
   public updatedDate?: Date;
 
+  public static get tableName(): string {
+    return 'Order';
+  }
   public $beforeInsert(): void {
     this.createdDate = this.updatedDate = new Date();
   }
