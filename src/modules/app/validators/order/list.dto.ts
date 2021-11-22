@@ -3,9 +3,15 @@ import { IsIn, IsOptional, IsString } from 'class-validator';
 import { PaginationValidator } from 'modules/common/validators/pagination';
 
 export enum OrderListOrderByEnum {
-  status = 'status',
   source = 'source',
-  isCompleted = 'source'
+  description = 'description',
+  quantity = 'quantity',
+  amount = 'amount',
+  currency = 'currency',
+  status = 'status',
+  unitPrice = 'unitPrice',
+  discount = 'discount',
+  isCompleted = 'isCompleted'
 }
 
 export class ListOrderDto extends PaginationValidator {

@@ -22,21 +22,20 @@ export class OrderRepository {
     if (params.orderBy) {
       const orderDirection = params.orderDirection ? params.orderDirection : 'desc';
 
-      query = query.orderBy(params.orderBy, orderDirection).skipUndefined();
+      query = query.orderBy(params.orderBy, orderDirection);
     }
 
     if (params.term) {
-      query = query.where(query => {
-        return query
-          .where('status', 'ilike', `%${params.term}%`)
-          .skipUndefined()
-          .orWhere('isCompleted', '=', params.term)
-          .skipUndefined()
-          .orWhere('source', 'ilike', `%${params.term}%`)
-          .skipUndefined();
-      });
+      if (params.orderBy === 'isCompleted') {
+        query = query.where(query => {
+          return query.where('isCompleted', '=', params.term);
+        });
+      } else {
+        query = query.where(query => {
+          return query.where(params.orderBy, 'ilike', `%${params.term}%`);
+        });
+      }
     }
-
     return query;
   }
 

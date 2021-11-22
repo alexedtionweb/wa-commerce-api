@@ -9,33 +9,29 @@ import { AuthRequired } from 'modules/common/guards/token';
 
 @ApiTags('Order')
 @Controller('/order')
+@AuthRequired()
 export class OrderController {
   constructor(private readonly orderService: OrderService, private readonly orderRepository: OrderRepository) {}
 
-  @Post()
-  @AuthRequired()
-  @ApiResponse({ status: 201 })
-  public async upsertOrder(@Body() order: CreateOrderDto) {
-    await this.orderService.upsertOrder(order);
-    return;
-  }
-
-  @Get(':id')
-  @AuthRequired()
-  @ApiResponse({ status: 200, type: [Order] })
-  public async getOrderByID(@Param('id') id: number) {
-    return this.orderService.findOrderByID(id);
-  }
-
   @Get()
-  @AuthRequired()
   @ApiResponse({ status: 200, type: [Order] })
   public async list(@Query() model: ListOrderDto) {
     return this.orderRepository.list(model);
   }
 
+  @Post()
+  @ApiResponse({ status: 201 })
+  public async upsertOrder(@Body() order: CreateOrderDto) {
+    return this.orderService.upsertOrder(order);
+  }
+
+  @Get(':id')
+  @ApiResponse({ status: 200, type: [Order] })
+  public async getOrderByID(@Param('id') id: number) {
+    return this.orderService.findOrderByID(id);
+  }
+
   @Delete(':orderId')
-  @AuthRequired()
   @ApiResponse({ status: 204 })
   public async delete(@Param('orderId', ParseIntPipe) orderId: number) {
     return this.orderRepository.remove(orderId);
