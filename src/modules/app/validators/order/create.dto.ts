@@ -1,6 +1,7 @@
 import { IOrder } from './../../../database/interfaces/order';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty, IsNumber, IsEnum, IsOptional, IsString, Length } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export enum OrderStatusEnum {
   placed = 'placed',
@@ -13,6 +14,7 @@ export enum OrderStatusEnum {
 export class CreateOrderDto implements IOrder {
   @ApiProperty({ required: false })
   @IsInt()
+  @IsOptional()
   public id?: number;
 
   @IsNotEmpty()
@@ -22,10 +24,12 @@ export class CreateOrderDto implements IOrder {
   public description: string;
 
   @IsInt()
+  @Type(() => Number)
   @ApiProperty({ required: true, type: 'number' })
   public quantity: number;
 
   @IsInt()
+  @Type(() => Number)
   @ApiProperty({ required: true, type: 'number' })
   public amount: number;
 
@@ -41,11 +45,13 @@ export class CreateOrderDto implements IOrder {
 
   @IsNumber()
   @IsOptional()
+  @Type(() => Number)
   @ApiProperty({ required: false, type: 'number' })
   public unitPrice?: number;
 
   @IsInt()
   @IsOptional()
+  @Type(() => Number)
   @ApiProperty({ required: false, type: 'number', default: 0 })
   public discount?: number;
 
