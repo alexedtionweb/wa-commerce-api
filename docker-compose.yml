@@ -1,19 +1,5 @@
-version: '2'
+version: "3.9"
 services:
-
-  web:
-    container_name: wa-commerce-api
-    build: docker/dev
-    ports:
-      - "3001:3000"
-      - "3229:9229"
-    env_file:
-      - .env
-    volumes:
-      - .:/server
-    links:
-      - database
-
   database:
     container_name: wa-commerce-database
     image: postgres:11.5-alpine
@@ -25,6 +11,20 @@ services:
       - ./.data/postgresql:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    restart: always
+
+  web:
+    container_name: wa-commerce-api
+    build: docker/dev
+    ports:
+      - "3001:3000"
+      - "3229:9229"
+    env_file:
+      - .env
+    volumes:
+      - .:/server
+    depends_on:
+      - database
 
   pgadmin:
     image: dpage/pgadmin4
@@ -33,3 +33,5 @@ services:
       PGADMIN_DEFAULT_PASSWORD: "123mudar"
     ports:
       - "16543:80"
+    volumes:
+      - .:/pg-admin-volume

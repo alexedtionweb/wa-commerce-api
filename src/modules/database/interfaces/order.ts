@@ -1,3 +1,5 @@
+import { OrderStatusEnum } from 'modules/app/validators/order/create.dto';
+
 export interface IOrder {
   id?: number;
   description: string;
@@ -6,7 +8,7 @@ export interface IOrder {
   currency: string;
   productID?: number;
   customerID?: number;
-  status?: string;
+  status?: OrderStatusEnum;
   unitPrice?: number;
   discount?: number;
   source?: string;

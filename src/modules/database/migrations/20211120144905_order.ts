@@ -9,7 +9,7 @@ export async function up(knex: Knex): Promise<void> {
       .notNullable()
       .defaultTo(0);
     table.integer('amount').notNullable();
-    table.string('currency', 3);
+    table.string('currency', 3).defaultTo('USD');
     table.integer('productID').nullable();
     table
       .integer('customerID')
@@ -18,10 +18,17 @@ export async function up(knex: Knex): Promise<void> {
     table
       .string('status', 30)
       .notNullable()
+      .defaultTo('pending')
       .index();
     table.integer('unitPrice').notNullable();
-    table.integer('discount').notNullable();
-    table.string('source', 50).notNullable();
+    table
+      .integer('discount')
+      .notNullable()
+      .defaultTo(0);
+    table
+      .string('source', 50)
+      .notNullable()
+      .defaultTo('web');
     table
       .boolean('isCompleted')
       .nullable()

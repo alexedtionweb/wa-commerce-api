@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IOrder } from './../interfaces/order';
 import { Model } from 'objection';
+import { OrderStatusEnum } from 'modules/app/validators/order/create.dto';
 
 export class Order extends Model implements IOrder {
   @ApiProperty({ type: 'number' })
@@ -24,8 +25,8 @@ export class Order extends Model implements IOrder {
   @ApiProperty({ type: 'number' })
   public customerID?: number;
 
-  @ApiProperty({ type: 'string' })
-  public status: string;
+  @ApiProperty({ enum: OrderStatusEnum })
+  public status: OrderStatusEnum;
 
   @ApiProperty({ type: 'string' })
   public unitPrice: number;
@@ -37,12 +38,12 @@ export class Order extends Model implements IOrder {
   public source: string;
 
   @ApiProperty({ type: 'boolean' })
-  public isCompleted: boolean;
+  public isCompleted?: boolean;
 
-  @ApiProperty({ type: 'date-time' })
+  @ApiProperty({ type: 'string', format: 'date-time' })
   public createdDate?: Date;
 
-  @ApiProperty({ type: 'date-time' })
+  @ApiProperty({ type: 'string', format: 'date-time' })
   public updatedDate?: Date;
 
   public static get tableName(): string {

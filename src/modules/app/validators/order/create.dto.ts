@@ -10,7 +10,11 @@ export enum OrderStatusEnum {
   cancelled = 'cancelled'
 }
 
-export class OrderValidator implements IOrder {
+export class CreateOrderDto implements IOrder {
+  @ApiProperty({ required: false })
+  @IsInt()
+  public id?: number;
+
   @IsNotEmpty()
   @IsString()
   @Length(3, 500)
@@ -18,11 +22,11 @@ export class OrderValidator implements IOrder {
   public description: string;
 
   @IsInt()
-  @ApiProperty({ required: false, type: 'number' })
+  @ApiProperty({ required: true, type: 'number' })
   public quantity: number;
 
   @IsInt()
-  @ApiProperty({ required: false, type: 'number' })
+  @ApiProperty({ required: true, type: 'number' })
   public amount: number;
 
   @IsNotEmpty()
@@ -36,12 +40,14 @@ export class OrderValidator implements IOrder {
   public status: OrderStatusEnum;
 
   @IsNumber()
+  @IsOptional()
   @ApiProperty({ required: false, type: 'number' })
-  public unitPrice: number;
+  public unitPrice?: number;
 
   @IsInt()
-  @ApiProperty({ required: false, type: 'number' })
-  public discount: number;
+  @IsOptional()
+  @ApiProperty({ required: false, type: 'number', default: 0 })
+  public discount?: number;
 
   @IsNotEmpty()
   @IsOptional()
